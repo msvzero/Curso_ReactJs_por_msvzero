@@ -4,6 +4,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 
 //Componentes
 import Navegador from './componentes/Navegador';
+import TablaClientes from './componentes/TablaClientes';
 
 class App extends Component {
   render() {
@@ -12,8 +13,8 @@ class App extends Component {
           <Navegador/>
           <Grid>
             <Row>
-              <Col md={12}>
-                <h2>Contenido dinamico</h2>
+              <Col md={12} xs={12}>
+                <TablaClientes/>
               </Col>
             </Row>
           </Grid>
