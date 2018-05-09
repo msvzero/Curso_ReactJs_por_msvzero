@@ -8,6 +8,7 @@ class TablaClientes extends Component {
                     <Col md={12} sm={12}>
                         <h3>Lista de Clientes</h3>
                     </Col>
+                    <hr/>
                 </Row>
                 <Row>
                     <Col md={12} sm={12}>

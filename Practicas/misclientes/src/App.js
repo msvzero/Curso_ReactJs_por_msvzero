@@ -5,6 +5,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 //Componentes
 import Navegador from './componentes/Navegador';
 import TablaClientes from './componentes/TablaClientes';
+import FormClientes from './componentes/FormClientes';
 
 class App extends Component {
   render() {
@@ -14,7 +15,7 @@ class App extends Component {
           <Grid>
             <Row>
               <Col md={12} xs={12}>
-                <TablaClientes/>
+                <FormClientes/>
               </Col>
             </Row>
           </Grid>
