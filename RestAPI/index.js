@@ -1,10 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const { mongoose } = require('./conexion');
 const { Cliente } = require('./model/Cliente');
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
+
 
 app.get('/', (request, response) => {
     response.send("Bienvenido");

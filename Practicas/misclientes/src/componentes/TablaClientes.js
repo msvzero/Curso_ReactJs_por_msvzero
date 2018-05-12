@@ -1,6 +1,23 @@
 import React, { Component } from 'react';
 import { Row, Col, Table, Button } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap'; 
 class TablaClientes extends Component {
+    constructor(){
+        super();
+        this.state = {
+            clientes: []
+        }
+    }
+    componentWillMount(){
+        fetch('http://localhost:3000/clientes',{
+            method: 'GET'
+        })
+        .then((response) =>  response.json())
+        .then((datos) => {
+            this.setState({clientes: datos});
+            console.log(this.state.clientes)
+        });
+    }
     render() {
         return(
             <div>
@@ -23,34 +40,28 @@ class TablaClientes extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                    <td>Editar | Borrar</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                    <td>Editar | Borrar</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Larry the Bird</td>
-                                    <td>Thornton</td>
-                                    <td>@twitter</td>
-                                    <td>Editar | Borrar</td>
-                                </tr>
+                            {
+                                this.state.clientes.map((cliente, index) => {
+                                    let indice = index + 1;
+                                    return(
+                                        <tr key={cliente._id}>
+                                            <td>{indice}</td>
+                                            <td>{cliente.nombre}</td>
+                                            <td>{cliente.direccion}</td>
+                                            <td>{cliente.telefono}</td>
+                                            <td>Editar | Borrar</td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                               
                             </tbody>
                         </Table>
                     </Col>
                 </Row>
                 <Row>
                     <Col md={12} sm={12}>
-                        <Button bsStyle="primary">Nuevo Cliente</Button>
+                        <LinkContainer to="/clientes/nuevo"><Button bsStyle="primary">Nuevo Cliente</Button></LinkContainer>
                     </Col>
                 </Row>
             </div>
