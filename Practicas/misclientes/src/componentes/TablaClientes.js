@@ -1,14 +1,26 @@
 import React, { Component } from 'react';
 import { Row, Col, Table, Button } from 'react-bootstrap';
 import { LinkContainer, Link } from 'react-router-bootstrap'; 
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css' // Import css
+
+
+
 class TablaClientes extends Component {
     constructor(){
         super();
         this.state = {
             clientes: []
         }
+        this.obtenerClientes = this.obtenerClientes.bind(this);
+        this.confirmarEliminacion = this.confirmarEliminacion.bind(this);
+        this.eliminaCliente = this.eliminaCliente.bind(this);
+        
     }
     componentWillMount(){
+       this.obtenerClientes();
+    }
+    obtenerClientes(){
         fetch('http://localhost:3000/clientes',{
             method: 'GET'
         })
@@ -17,6 +29,31 @@ class TablaClientes extends Component {
             this.setState({clientes: datos});
             console.log(this.state.clientes)
         });
+    }
+    confirmarEliminacion(id){
+        confirmAlert({
+            title: 'Confirmar accion',
+            message: 'Esta seguro de eliminar?.',
+            buttons: [
+              {
+                label: 'Si',
+                onClick: () => {this.eliminaCliente(id)}
+              },
+              {
+                label: 'No',
+              }
+            ]
+          })
+    }
+    eliminaCliente(id) {
+        fetch(`http://localhost:3000/cliente/delete/${id}`, {
+            method: 'DELETE'
+        })
+        .then((response) => response.json())
+        .then((datos) => {
+            console.log('Cliente eliminado', datos);
+            this.obtenerClientes();
+        })
     }
     render() {
         return(
@@ -52,7 +89,7 @@ class TablaClientes extends Component {
                                             <td>
                                             <LinkContainer to={`/clientes/editar/${cliente._id}`}><a>Editar</a></LinkContainer>
                                             {' | '}
-                                            <a onClick={() => alert("Se borrara este cliente")}>Borrar</a>
+                                            <a onClick={() => this.confirmarEliminacion(cliente._id)}>Borrar</a>
                                             </td>
                                         </tr>
                                     )
