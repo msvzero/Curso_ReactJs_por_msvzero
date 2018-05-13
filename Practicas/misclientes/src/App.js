@@ -22,6 +22,7 @@ class App extends Component {
                   <Route exact path="/" component={Dashboard}/>
                   <Route exact path="/clientes" component={TablaClientes} />
                   <Route path="/clientes/nuevo" component={FormClientes}/>
+                  <Route path="/clientes/editar/:id" component={FormClientes} />
                 </Col>
               </Row>
             </Grid>

@@ -28,11 +28,19 @@ class FormClientes extends Component {
             direccion: this.state.direccion,
             telefono: this.state.telefono
         }
+        let { id } = this.props.match.params;
+        let url = '';
+        let method =''
+        if(id){
+            url = `http://localhost:3000/clientes/update/${id}`;
+            method = 'PUT';
+        }else{
+            url = 'http://localhost:3000/clientes/nuevo';
+            method = 'POST';
+        }
 
-        console.log(clienteNuevo);
-
-       fetch('http://localhost:3000/clientes/nuevo',{
-            method: 'POST',
+       fetch(url,{
+            method: method,
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -45,6 +53,24 @@ class FormClientes extends Component {
         }).catch((error) => {
             console.log(error);
         })
+    }
+    componentDidMount(){
+        let { id } = this.props.match.params;
+        console.log(id);
+        if(id){
+            fetch(`http://localhost:3000/clientes/busqueda/${id}`,{
+                method: 'GET'
+            })
+            .then((response) => response.json())
+            .then((datos) => {
+                console.log(datos);
+                this.setState({
+                    nombre: datos.nombre,
+                    direccion: datos.direccion,
+                    telefono: datos.telefono
+                })
+            })
+        }
     }
     render() {
         return(
@@ -62,15 +88,15 @@ class FormClientes extends Component {
                                 <ControlLabel>
                                     Nombre Completo
                                 </ControlLabel>
-                                <FormControl type="text" placeholder="Introduzca su nombre" onChange={(event) => this.setState({nombre: event.target.value})}/>
+                                <FormControl type="text"   value= {this.state.nombre}placeholder="Introduzca su nombre" onChange={(event) => this.setState({nombre: event.target.value})}/>
                             </FormGroup>
                             <FormGroup>
                                 <ControlLabel>Direccion</ControlLabel>
-                                <FormControl type="text" placeholder="Tu direccion" onChange={(event) => this.setState({direccion: event.target.value})}/>
+                                <FormControl type="text" value= {this.state.direccion} placeholder="Tu direccion" onChange={(event) => this.setState({direccion: event.target.value})}/>
                             </FormGroup>
                             <FormGroup>
                                 <ControlLabel>Numero Telefonico</ControlLabel>
-                                <FormControl type="text" placeholder="Linea baja o celular" onChange={(event) => this.setState({telefono: event.target.value})}/>
+                                <FormControl type="text"  value= {this.state.telefono} placeholder="Linea baja o celular" onChange={(event) => this.setState({telefono: event.target.value})}/>
                             </FormGroup>
                         </form>
                     </Col>

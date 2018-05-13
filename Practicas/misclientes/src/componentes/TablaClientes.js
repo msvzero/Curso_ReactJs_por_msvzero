@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col, Table, Button } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap'; 
+import { LinkContainer, Link } from 'react-router-bootstrap'; 
 class TablaClientes extends Component {
     constructor(){
         super();
@@ -49,7 +49,11 @@ class TablaClientes extends Component {
                                             <td>{cliente.nombre}</td>
                                             <td>{cliente.direccion}</td>
                                             <td>{cliente.telefono}</td>
-                                            <td>Editar | Borrar</td>
+                                            <td>
+                                            <LinkContainer to={`/clientes/editar/${cliente._id}`}><a>Editar</a></LinkContainer>
+                                            {' | '}
+                                            <a onClick={() => alert("Se borrara este cliente")}>Borrar</a>
+                                            </td>
                                         </tr>
                                     )
                                 })
